@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowDownRight, ArrowUpRight, Github, Linkedin, Mail, Menu, X, Code2, BrainCircuit, Layers3, Terminal, Sparkles, Cpu, ChevronRight, Send } from "lucide-react";
 import "./styles.css";
@@ -23,6 +23,7 @@ function App(){
   const [menu,setMenu]=useState(false);
   const [cmd,setCmd]=useState("");
   const [output,setOutput]=useState("Welcome! Type help to explore.");
+  useEffect(()=>{\n    const nodes=document.querySelectorAll(".hero-copy,.art,.ticker,.section-label,.about-grid,.stats,.project,.skill-card,.skill-row,.terminal,.contact-panel");\n    nodes.forEach((node,i)=>{node.classList.add("reveal");node.style.setProperty("--reveal-delay",`${(i%4)*90}ms`)});\n    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -35px 0px"});\n    nodes.forEach(node=>observer.observe(node));\n    return ()=>observer.disconnect();\n  },[]);
   const filters=["All",...new Set(projects.map(p=>p.category))];
   const shown=useMemo(()=>filter==="All"?projects:projects.filter(p=>p.category===filter),[filter]);
   const run=(e)=>{e.preventDefault();const c=cmd.trim().toLowerCase();const answers={help:"Commands: about · skills · projects · contact · clear",about:"P. Senthil Velan — AI & Data Science developer interested in applied AI and useful software.",skills:"Python · Java · ML · YOLOv8 · Generative AI · React · Flask · Django · MySQL",projects:"FEDIS-OT · Signify · SmartCart · EON Chatbot · Skin Disease AI · VayuMitra",contact:"Use the contact links below to connect."};setOutput(c==="clear"?"":answers[c]||`Command not found: ${c}. Type help.`);setCmd("");};
