@@ -24,7 +24,7 @@ function App(){
   const [cmd,setCmd]=useState("");
   const [output,setOutput]=useState("Welcome! Type help to explore.");
   useEffect(()=>{
-    const nodes=document.querySelectorAll(".hero-copy,.art,.ticker,.section-label,.about-grid,.stats,.project,.skill-card,.skill-row,.terminal,.contact-panel");
+    const nodes=document.querySelectorAll(".ticker,.section-label,.about-grid,.stats,.project,.skill-card,.skill-row,.terminal,.contact-panel");
     nodes.forEach((node,i)=>{node.classList.add("reveal");node.style.setProperty("--reveal-delay",`${(i%4)*90}ms`)});
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:"0px 0px -35px 0px"});
     nodes.forEach(node=>observer.observe(node));
